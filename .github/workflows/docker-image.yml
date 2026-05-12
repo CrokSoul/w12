@@ -22,7 +22,7 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           port: 22
           source: "./"
-          target: "/home/sfl5-node/htdocs/sfl5n.ncgrp.xyz/week08"
+          target: "/home/s2276375-node/htdocs/s2276375n.ncgrp.xyz/w12"
           strip_components: 1
 
       - name: 🐳 Build & restart Docker container on server
@@ -35,9 +35,9 @@ jobs:
           script: |
             set -e
 
-            APP_DIR="/home/sfl5-node/htdocs/sfl5n.ncgrp.xyz/week08"
-            CONTAINER_NAME="s112233w8-app"
-            IMAGE_NAME="s112233w8-app:latest"
+            APP_DIR="/home/s2276375-node/htdocs/s2276375n.ncgrp.xyz/w12"
+            CONTAINER_NAME="s2276375w12-app"
+            IMAGE_NAME="s2276375w12-app:latest"
 
             cd "$APP_DIR"
 
