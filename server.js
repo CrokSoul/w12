@@ -3,10 +3,7 @@ const app = express();
 
 app.set("view engine", "ejs");
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static("public"));
-
-let patients = [
+const patients = [
   {
     name: "John Smith",
     condition: "Infectious symptoms",
@@ -31,24 +28,11 @@ app.get("/", (req, res) => {
   res.render("index", {
     totalRooms: 40,
     availableRooms: 12,
-    occupiedRooms: 28,
     highPriorityPatients: 5,
     patients: patients
   });
 });
 
-app.post("/add-patient", (req, res) => {
-  const newPatient = {
-    name: req.body.name,
-    condition: req.body.condition,
-    priority: req.body.priority,
-    room: req.body.room
-  };
-
-  patients.push(newPatient);
-  res.redirect("/");
-});
-
-app.listen(3000, () => {
-  console.log("Server running on http://localhost:3000");
+app.listen(3045, () => {
+  console.log("Example app listening on port 3045");
 });

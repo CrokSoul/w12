@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hospital Room Management System</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #eef3f8;
+      color: #1f2937;
+    }
+
+    header {
+      background-color: #0f3d5e;
+      color: white;
+      padding: 25px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      margin: 0;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 25px;
+      font-weight: bold;
+    }
+
+    .hero {
+      background: linear-gradient(120deg, #0f3d5e, #168aad);
+      color: white;
+      padding: 70px 60px;
+    }
+
+    .hero h2 {
+      font-size: 42px;
+      margin-bottom: 15px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      max-width: 700px;
+      line-height: 1.6;
+    }
+
+    main {
+      padding: 40px 60px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 25px;
+      margin-bottom: 40px;
+    }
+
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    .card h3 {
+      color: #0f3d5e;
+      margin-top: 0;
+    }
+
+    .number {
+      font-size: 36px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .green {
+      color: #15803d;
+    }
+
+    .orange {
+      color: #d97706;
+    }
+
+    .red {
+      color: #dc2626;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    th, td {
+      padding: 15px;
+      border-bottom: 1px solid #e5e7eb;
+      text-align: left;
+    }
+
+    th {
+      background-color: #0f3d5e;
+      color: white;
+    }
+
+    .high {
+      color: #dc2626;
+      font-weight: bold;
+    }
+
+    .medium {
+      color: #d97706;
+      font-weight: bold;
+    }
+
+    .low {
+      color: #15803d;
+      font-weight: bold;
+    }
+
+    footer {
+      background-color: #0f3d5e;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 50px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>Hospital Isolation Manager</h1>
+    <nav>
+      <a href="/">Dashboard</a>
+      <a href="/patients">Patients</a>
+      <a href="/rooms">Rooms</a>
+      <a href="/login">Login</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h2>Hospital Room & Patient Isolation Management</h2>
+    <p>
+      This web application helps hospital staff manage available rooms,
+      track patient details, and prioritise patients who require isolation.
+    </p>
+  </section>
+
+  <main>
+    <h2>Dashboard Overview</h2>
+
+    <div class="cards">
+      <div class="card">
+        <h3>Total Rooms</h3>
+        <p>All rooms registered in the system.</p>
+        <div class="number"><%= totalRooms %></div>
+      </div>
+
+      <div class="card">
+        <h3>Available Rooms</h3>
+        <p>Rooms currently available for patients.</p>
+        <div class="number green"><%= availableRooms %></div>
+      </div>
+
+      <div class="card">
+        <h3>High Priority Patients</h3>
+        <p>Patients who need urgent isolation.</p>
+        <div class="number red"><%= highPriorityPatients %></div>
+      </div>
+    </div>
+
+    <h2>Patient Priority List</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Patient Name</th>
+          <th>Condition</th>
+          <th>Priority</th>
+          <th>Assigned Room</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% patients.forEach(function(patient) { %>
+          <tr>
+            <td><%= patient.name %></td>
+            <td><%= patient.condition %></td>
+            <td class="<%= patient.priority.toLowerCase() %>">
+              <%= patient.priority %>
+            </td>
+            <td><%= patient.room %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </main>
+
+  <footer>
+    <p>Hospital Room Management System | Node.js + Express + EJS</p>
+  </footer>
+
+</body>
+</html>
