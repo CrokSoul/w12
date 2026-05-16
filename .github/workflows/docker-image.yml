@@ -65,3 +65,12 @@ jobs:
               --restart unless-stopped \
               -p 3045:3045 \
               "$IMAGE_NAME"
+              
+            echo "Docker containers:"
+            docker ps -a
+
+            echo "Container logs:"
+            docker logs "$CONTAINER_NAME" --tail 100 || true
+
+            echo "Testing app inside server:"
+            curl -i http://127.0.0.1:3045/register || true
