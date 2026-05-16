@@ -1,0 +1,51 @@
+<%- include("../partials/header", { title: title }) %>
+<%- include("../partials/sidebar") %>
+
+<section class="form-wrapper left">
+  <div class="form-card wide">
+    <h1>Add New Room</h1>
+
+    <% if (error) { %>
+      <div class="alert error"><%= error %></div>
+    <% } %>
+
+    <form action="/rooms/add" method="POST">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Room Number</label>
+          <input type="text" name="room_number" required>
+        </div>
+
+        <div class="form-group">
+          <label>Room Type</label>
+          <select name="room_type" required>
+            <option value="General">General</option>
+            <option value="ICU">ICU</option>
+            <option value="Isolation">Isolation</option>
+            <option value="Emergency">Emergency</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Status</label>
+          <select name="status" required>
+            <option value="Available">Available</option>
+            <option value="Occupied">Occupied</option>
+            <option value="Cleaning">Cleaning</option>
+            <option value="Maintenance">Maintenance</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Notes</label>
+          <input type="text" name="notes">
+        </div>
+      </div>
+
+      <button type="submit" class="btn">Save Room</button>
+      <a href="/rooms" class="btn secondary">Cancel</a>
+    </form>
+  </div>
+</section>
+
+<%- include("../partials/footer") %>

@@ -1,0 +1,51 @@
+<%- include("../partials/header", { title: title }) %>
+<%- include("../partials/sidebar") %>
+
+<section class="form-wrapper left">
+  <div class="form-card wide">
+    <h1>Edit Room</h1>
+
+    <% if (error) { %>
+      <div class="alert error"><%= error %></div>
+    <% } %>
+
+    <form action="/rooms/<%= room.id %>/edit" method="POST">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Room Number</label>
+          <input type="text" name="room_number" value="<%= room.room_number %>" required>
+        </div>
+
+        <div class="form-group">
+          <label>Room Type</label>
+          <select name="room_type" required>
+            <option value="General" <%= room.room_type === "General" ? "selected" : "" %>>General</option>
+            <option value="ICU" <%= room.room_type === "ICU" ? "selected" : "" %>>ICU</option>
+            <option value="Isolation" <%= room.room_type === "Isolation" ? "selected" : "" %>>Isolation</option>
+            <option value="Emergency" <%= room.room_type === "Emergency" ? "selected" : "" %>>Emergency</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Status</label>
+          <select name="status" required>
+            <option value="Available" <%= room.status === "Available" ? "selected" : "" %>>Available</option>
+            <option value="Occupied" <%= room.status === "Occupied" ? "selected" : "" %>>Occupied</option>
+            <option value="Cleaning" <%= room.status === "Cleaning" ? "selected" : "" %>>Cleaning</option>
+            <option value="Maintenance" <%= room.status === "Maintenance" ? "selected" : "" %>>Maintenance</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Notes</label>
+          <input type="text" name="notes" value="<%= room.notes || '' %>">
+        </div>
+      </div>
+
+      <button type="submit" class="btn">Update Room</button>
+      <a href="/rooms" class="btn secondary">Cancel</a>
+    </form>
+  </div>
+</section>
+
+<%- include("../partials/footer") %>

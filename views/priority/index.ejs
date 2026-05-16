@@ -1,0 +1,74 @@
+<%- include("../partials/header", { title: title }) %>
+<%- include("../partials/sidebar") %>
+
+<section class="page-header">
+  <div>
+    <h1>Isolation Priority Assessment</h1>
+    <p>Assess whether a patient should be prioritised for an isolation room.</p>
+  </div>
+</section>
+
+<section class="form-wrapper left">
+  <div class="form-card wide">
+    <h2>Medical Criteria</h2>
+
+    <% if (error) { %>
+      <div class="alert error"><%= error %></div>
+    <% } %>
+
+    <form action="/priority" method="POST">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Patient</label>
+          <select name="patient_id" required>
+            <option value="">Select patient</option>
+
+            <% patients.forEach(patient => { %>
+              <option value="<%= patient.id %>">
+                <%= patient.first_name %> <%= patient.last_name %>
+              </option>
+            <% }) %>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Symptoms Severity</label>
+          <select name="symptoms_severity" required>
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Infectious Disease Suspected?</label>
+          <select name="infectious_disease_suspected" required>
+            <option value="no">No</option>
+            <option value="yes">Yes</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Immune System Risk</label>
+          <select name="immune_risk" required>
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Breathing Difficulty?</label>
+          <select name="breathing_difficulty" required>
+            <option value="no">No</option>
+            <option value="yes">Yes</option>
+          </select>
+        </div>
+      </div>
+
+      <button type="submit" class="btn">Calculate Priority</button>
+    </form>
+  </div>
+</section>
+
+<%- include("../partials/footer") %>

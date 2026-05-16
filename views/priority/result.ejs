@@ -1,0 +1,21 @@
+<%- include("../partials/header", { title: title }) %>
+<%- include("../partials/sidebar") %>
+
+<section class="content-card">
+  <h1>Isolation Priority Result</h1>
+
+  <div class="result-box">
+    <h2><%= patient.first_name %> <%= patient.last_name %></h2>
+
+    <p><strong>Priority Score:</strong> <%= result.score %></p>
+    <p><strong>Priority Level:</strong> <%= result.priorityLevel %></p>
+    <p><strong>Isolation Required:</strong> <%= result.isolationRequired ? "Yes" : "No" %></p>
+  </div>
+
+  <div class="action-row">
+    <a href="/priority" class="btn">Run Another Assessment</a>
+    <a href="/patients/<%= patient.id %>" class="btn secondary">View Patient</a>
+  </div>
+</section>
+
+<%- include("../partials/footer") %>

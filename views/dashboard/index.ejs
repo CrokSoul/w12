@@ -1,0 +1,46 @@
+<%- include("../partials/header", { title: title }) %>
+<%- include("../partials/sidebar") %>
+
+<section class="page-header">
+  <div>
+    <h1>Hospital Room Management System</h1>
+    <p>Manage patients, monitor room availability, and assess isolation priority.</p>
+  </div>
+</section>
+
+<section class="stats-grid">
+  <div class="stat-card">
+    <h3>Patient Records</h3>
+    <p class="stat-number"><%= stats.patients %></p>
+    <span>Patients currently stored</span>
+  </div>
+
+  <div class="stat-card">
+    <h3>Available Rooms</h3>
+    <p class="stat-number"><%= stats.availableRooms %></p>
+    <span>Rooms ready for assignment</span>
+  </div>
+
+  <div class="stat-card">
+    <h3>Isolation Cases</h3>
+    <p class="stat-number"><%= stats.isolationCases %></p>
+    <span>Patients requiring isolation</span>
+  </div>
+</section>
+
+<section class="content-card">
+  <h2>System Overview</h2>
+
+  <p>
+    This application helps hospital staff manage patient records, track room availability,
+    assign patients to rooms, and determine isolation priority using predefined medical criteria.
+  </p>
+
+  <div class="action-row">
+    <a href="/patients" class="btn">Manage Patients</a>
+    <a href="/rooms" class="btn secondary">Manage Rooms</a>
+    <a href="/priority" class="btn warning">Check Isolation Priority</a>
+  </div>
+</section>
+
+<%- include("../partials/footer") %>

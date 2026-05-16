@@ -1,0 +1,28 @@
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <h2>Hospital RMS</h2>
+    <p>Room Management System</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <% if (currentUser) { %>
+      <a href="/" class="<%= currentPath === '/' ? 'active' : '' %>">Dashboard</a>
+      <a href="/patients" class="<%= currentPath.startsWith('/patients') ? 'active' : '' %>">Patients</a>
+      <a href="/rooms" class="<%= currentPath.startsWith('/rooms') ? 'active' : '' %>">Rooms</a>
+      <a href="/priority" class="<%= currentPath.startsWith('/priority') ? 'active' : '' %>">Isolation Priority</a>
+      <a href="/logout">Logout</a>
+    <% } else { %>
+      <a href="/login" class="<%= currentPath === '/login' ? 'active' : '' %>">Login</a>
+      <a href="/register" class="<%= currentPath === '/register' ? 'active' : '' %>">Register</a>
+    <% } %>
+  </nav>
+
+  <% if (currentUser) { %>
+    <div class="user-box">
+      <strong><%= currentUser.full_name %></strong>
+      <span><%= currentUser.role %></span>
+    </div>
+  <% } %>
+</aside>
+
+<main class="main-content">

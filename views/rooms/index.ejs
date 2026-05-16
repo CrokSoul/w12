@@ -1,0 +1,56 @@
+<%- include("../partials/header", { title: title }) %>
+<%- include("../partials/sidebar") %>
+
+<section class="page-header">
+  <div>
+    <h1>Room Availability</h1>
+    <p>Track available, occupied, cleaning and maintenance rooms.</p>
+  </div>
+
+  <a href="/rooms/add" class="btn">Add New Room</a>
+</section>
+
+<section class="content-card">
+  <h2>Rooms</h2>
+
+  <% if (rooms.length === 0) { %>
+    <div class="empty-state">
+      <h3>No rooms added yet</h3>
+      <p>Add hospital rooms to start tracking availability.</p>
+    </div>
+  <% } else { %>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Room Number</th>
+          <th>Type</th>
+          <th>Status</th>
+          <th>Notes</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% rooms.forEach(room => { %>
+          <tr>
+            <td><%= room.room_number %></td>
+            <td><%= room.room_type %></td>
+            <td>
+              <span class="badge"><%= room.status %></span>
+            </td>
+            <td><%= room.notes || "No notes" %></td>
+            <td class="table-actions">
+              <a href="/rooms/<%= room.id %>/edit" class="small-btn">Edit</a>
+
+              <form action="/rooms/<%= room.id %>/delete" method="POST" onsubmit="return confirm('Delete this room?');">
+                <button type="submit" class="small-btn danger">Delete</button>
+              </form>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+</section>
+
+<%- include("../partials/footer") %>

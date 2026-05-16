@@ -1,0 +1,67 @@
+<%- include("../partials/header", { title: title }) %>
+<%- include("../partials/sidebar") %>
+
+<section class="page-header">
+  <div>
+    <h1>Patient Details</h1>
+    <p>Detailed patient record and room assignment.</p>
+  </div>
+
+  <a href="/patients/<%= patient.id %>/edit" class="btn">Edit Patient</a>
+</section>
+
+<section class="content-card">
+  <h2><%= patient.first_name %> <%= patient.last_name %></h2>
+
+  <div class="details-grid">
+    <div>
+      <strong>Date of Birth:</strong>
+      <p><%= patient.date_of_birth ? patient.date_of_birth.toISOString().split('T')[0] : "Not provided" %></p>
+    </div>
+
+    <div>
+      <strong>Gender:</strong>
+      <p><%= patient.gender %></p>
+    </div>
+
+    <div>
+      <strong>Contact Number:</strong>
+      <p><%= patient.contact_number || "Not provided" %></p>
+    </div>
+
+    <div>
+      <strong>Infection Status:</strong>
+      <p><%= patient.infection_status %></p>
+    </div>
+
+    <div>
+      <strong>Isolation Required:</strong>
+      <p><%= patient.isolation_required ? "Yes" : "No" %></p>
+    </div>
+
+    <div>
+      <strong>Isolation Priority:</strong>
+      <p><%= patient.isolation_priority %></p>
+    </div>
+
+    <div>
+      <strong>Assigned Room:</strong>
+      <p>
+        <% if (patient.room_number) { %>
+          Room <%= patient.room_number %> - <%= patient.room_type %>
+        <% } else { %>
+          Not assigned
+        <% } %>
+      </p>
+    </div>
+  </div>
+
+  <div class="notes-box">
+    <strong>Condition Notes:</strong>
+    <p><%= patient.condition_notes || "No notes added." %></p>
+  </div>
+
+  <a href="/patients" class="btn secondary">Back to Patients</a>
+</section>
+
+<%- include("../partials/footer") %>

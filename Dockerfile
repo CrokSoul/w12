@@ -6,4 +6,4 @@ COPY . .
 RUN chown -R node:node /app
 USER node
 EXPOSE 3045
-CMD ["node","server.js"]
+CMD ["npm", "start"]

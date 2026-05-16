@@ -1,0 +1,61 @@
+<%- include("../partials/header", { title: title }) %>
+<%- include("../partials/sidebar") %>
+
+<section class="page-header">
+  <div>
+    <h1>Patient Records</h1>
+    <p>Add, view, update and manage patient information.</p>
+  </div>
+
+  <a href="/patients/add" class="btn">Add New Patient</a>
+</section>
+
+<section class="content-card">
+  <h2>Patients</h2>
+
+  <% if (patients.length === 0) { %>
+    <div class="empty-state">
+      <h3>No patient records yet</h3>
+      <p>Add a patient to start managing records.</p>
+    </div>
+  <% } else { %>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Gender</th>
+          <th>Infection Status</th>
+          <th>Isolation Priority</th>
+          <th>Room</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% patients.forEach(patient => { %>
+          <tr>
+            <td><%= patient.first_name %> <%= patient.last_name %></td>
+            <td><%= patient.gender %></td>
+            <td>
+              <span class="badge"><%= patient.infection_status %></span>
+            </td>
+            <td>
+              <span class="badge"><%= patient.isolation_priority %></span>
+            </td>
+            <td><%= patient.room_number || "Not assigned" %></td>
+            <td class="table-actions">
+              <a href="/patients/<%= patient.id %>" class="small-btn">View</a>
+              <a href="/patients/<%= patient.id %>/edit" class="small-btn">Edit</a>
+
+              <form action="/patients/<%= patient.id %>/delete" method="POST" onsubmit="return confirm('Delete this patient?');">
+                <button type="submit" class="small-btn danger">Delete</button>
+              </form>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+</section>
+
+<%- include("../partials/footer") %>

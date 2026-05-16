@@ -1,0 +1,92 @@
+<%- include("../partials/header", { title: title }) %>
+<%- include("../partials/sidebar") %>
+
+<section class="form-wrapper left">
+  <div class="form-card wide">
+    <h1>Edit Patient</h1>
+
+    <% if (error) { %>
+      <div class="alert error"><%= error %></div>
+    <% } %>
+
+    <form action="/patients/<%= patient.id %>/edit" method="POST">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" name="first_name" value="<%= patient.first_name %>" required>
+        </div>
+
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" name="last_name" value="<%= patient.last_name %>" required>
+        </div>
+
+        <div class="form-group">
+          <label>Date of Birth</label>
+          <input type="date" name="date_of_birth" value="<%= patient.date_of_birth ? patient.date_of_birth.toISOString().split('T')[0] : '' %>">
+        </div>
+
+        <div class="form-group">
+          <label>Gender</label>
+          <select name="gender" required>
+            <option value="Male" <%= patient.gender === "Male" ? "selected" : "" %>>Male</option>
+            <option value="Female" <%= patient.gender === "Female" ? "selected" : "" %>>Female</option>
+            <option value="Other" <%= patient.gender === "Other" ? "selected" : "" %>>Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Contact Number</label>
+          <input type="text" name="contact_number" value="<%= patient.contact_number || '' %>">
+        </div>
+
+        <div class="form-group">
+          <label>Infection Status</label>
+          <select name="infection_status" required>
+            <option value="None" <%= patient.infection_status === "None" ? "selected" : "" %>>None</option>
+            <option value="Suspected" <%= patient.infection_status === "Suspected" ? "selected" : "" %>>Suspected</option>
+            <option value="Confirmed" <%= patient.infection_status === "Confirmed" ? "selected" : "" %>>Confirmed</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Isolation Priority</label>
+          <select name="isolation_priority" required>
+            <option value="Low" <%= patient.isolation_priority === "Low" ? "selected" : "" %>>Low</option>
+            <option value="Medium" <%= patient.isolation_priority === "Medium" ? "selected" : "" %>>Medium</option>
+            <option value="High" <%= patient.isolation_priority === "High" ? "selected" : "" %>>High</option>
+            <option value="Critical" <%= patient.isolation_priority === "Critical" ? "selected" : "" %>>Critical</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Assign Room</label>
+          <select name="room_id">
+            <option value="">No room assigned</option>
+
+            <% rooms.forEach(room => { %>
+              <option value="<%= room.id %>" <%= patient.room_id === room.id ? "selected" : "" %>>
+                Room <%= room.room_number %> - <%= room.room_type %>
+              </option>
+            <% }) %>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Condition Notes</label>
+        <textarea name="condition_notes"><%= patient.condition_notes || '' %></textarea>
+      </div>
+
+      <div class="checkbox-group">
+        <input type="checkbox" name="isolation_required" id="isolation_required" <%= patient.isolation_required ? "checked" : "" %>>
+        <label for="isolation_required">Isolation required</label>
+      </div>
+
+      <button type="submit" class="btn">Update Patient</button>
+      <a href="/patients" class="btn secondary">Cancel</a>
+    </form>
+  </div>
+</section>
+
+<%- include("../partials/footer") %>
