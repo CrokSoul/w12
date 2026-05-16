@@ -1,6 +1,6 @@
 const express = require("express");
 const pool = require("../config/db");
-const { requireAuth } = require("../middleware/authMiddleware");
+const { requireAuth, requireAdmin } = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
@@ -16,20 +16,21 @@ router.get("/", requireAuth, async (req, res) => {
     });
   } catch (error) {
     console.error(error);
+
     res.status(500).render("errors/500", {
       title: "Server Error"
     });
   }
 });
 
-router.get("/add", requireAuth, (req, res) => {
+router.get("/add", requireAdmin, (req, res) => {
   res.render("rooms/add", {
     title: "Add Room",
     error: null
   });
 });
 
-router.post("/add", requireAuth, async (req, res) => {
+router.post("/add", requireAdmin, async (req, res) => {
   try {
     const { room_number, room_type, status, notes } = req.body;
 
@@ -49,7 +50,7 @@ router.post("/add", requireAuth, async (req, res) => {
   }
 });
 
-router.get("/:id/edit", requireAuth, async (req, res) => {
+router.get("/:id/edit", requireAdmin, async (req, res) => {
   try {
     const [rooms] = await pool.query(
       "SELECT * FROM hrm_rooms WHERE id = ?",
@@ -76,7 +77,7 @@ router.get("/:id/edit", requireAuth, async (req, res) => {
   }
 });
 
-router.post("/:id/edit", requireAuth, async (req, res) => {
+router.post("/:id/edit", requireAdmin, async (req, res) => {
   try {
     const { room_number, room_type, status, notes } = req.body;
 
@@ -95,7 +96,7 @@ router.post("/:id/edit", requireAuth, async (req, res) => {
   }
 });
 
-router.post("/:id/delete", requireAuth, async (req, res) => {
+router.post("/:id/delete", requireAdmin, async (req, res) => {
   try {
     await pool.query(
       "DELETE FROM hrm_rooms WHERE id = ?",

@@ -1,6 +1,6 @@
 const express = require("express");
 const pool = require("../config/db");
-const { requireAuth } = require("../middleware/authMiddleware");
+const { requireRole } = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
@@ -43,7 +43,8 @@ function calculatePriority(
   };
 }
 
-router.get("/", requireAuth, async (req, res) => {
+// Isolation Priority page: Admin and Doctor only
+router.get("/", requireRole("admin", "doctor"), async (req, res) => {
   try {
     const [patients] = await pool.query(
       "SELECT id, first_name, last_name FROM hrm_patients ORDER BY last_name ASC"
@@ -63,7 +64,8 @@ router.get("/", requireAuth, async (req, res) => {
   }
 });
 
-router.post("/", requireAuth, async (req, res) => {
+// Calculate Isolation Priority: Admin and Doctor only
+router.post("/", requireRole("admin", "doctor"), async (req, res) => {
   try {
     const {
       patient_id,

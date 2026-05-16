@@ -38,8 +38,14 @@
 
   <div class="action-row">
     <a href="/patients" class="btn">Manage Patients</a>
-    <a href="/rooms" class="btn secondary">Manage Rooms</a>
-    <a href="/priority" class="btn warning">Check Isolation Priority</a>
+
+    <a href="/rooms" class="btn secondary">
+      <%= currentUser && currentUser.role === "admin" ? "Manage Rooms" : "View Rooms" %>
+    </a>
+
+    <% if (currentUser && (currentUser.role === "admin" || currentUser.role === "doctor")) { %>
+      <a href="/priority" class="btn warning">Check Isolation Priority</a>
+    <% } %>
   </div>
 </section>
 

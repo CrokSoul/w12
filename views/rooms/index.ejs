@@ -7,7 +7,9 @@
     <p>Track available, occupied, cleaning and maintenance rooms.</p>
   </div>
 
-  <a href="/rooms/add" class="btn">Add New Room</a>
+  <% if (currentUser && currentUser.role === "admin") { %>
+    <a href="/rooms/add" class="btn">Add New Room</a>
+  <% } %>
 </section>
 
 <section class="content-card">
@@ -26,7 +28,10 @@
           <th>Type</th>
           <th>Status</th>
           <th>Notes</th>
-          <th>Actions</th>
+
+          <% if (currentUser && currentUser.role === "admin") { %>
+            <th>Actions</th>
+          <% } %>
         </tr>
       </thead>
 
@@ -39,13 +44,16 @@
               <span class="badge"><%= room.status %></span>
             </td>
             <td><%= room.notes || "No notes" %></td>
-            <td class="table-actions">
-              <a href="/rooms/<%= room.id %>/edit" class="small-btn">Edit</a>
 
-              <form action="/rooms/<%= room.id %>/delete" method="POST" onsubmit="return confirm('Delete this room?');">
-                <button type="submit" class="small-btn danger">Delete</button>
-              </form>
-            </td>
+            <% if (currentUser && currentUser.role === "admin") { %>
+              <td class="table-actions">
+                <a href="/rooms/<%= room.id %>/edit" class="small-btn">Edit</a>
+
+                <form action="/rooms/<%= room.id %>/delete" method="POST" onsubmit="return confirm('Delete this room?');">
+                  <button type="submit" class="small-btn danger">Delete</button>
+                </form>
+              </td>
+            <% } %>
           </tr>
         <% }) %>
       </tbody>

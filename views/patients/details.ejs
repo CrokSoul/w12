@@ -7,7 +7,9 @@
     <p>Detailed patient record and room assignment.</p>
   </div>
 
-  <a href="/patients/<%= patient.id %>/edit" class="btn">Edit Patient</a>
+  <% if (currentUser && (currentUser.role === "admin" || currentUser.role === "doctor")) { %>
+    <a href="/patients/<%= patient.id %>/edit" class="btn">Edit Patient</a>
+  <% } %>
 </section>
 
 <section class="content-card">

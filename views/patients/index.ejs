@@ -7,7 +7,9 @@
     <p>Add, view, update and manage patient information.</p>
   </div>
 
-  <a href="/patients/add" class="btn">Add New Patient</a>
+  <% if (currentUser && (currentUser.role === "admin" || currentUser.role === "nurse")) { %>
+    <a href="/patients/add" class="btn">Add New Patient</a>
+  <% } %>
 </section>
 
 <section class="content-card">
@@ -43,13 +45,19 @@
               <span class="badge"><%= patient.isolation_priority %></span>
             </td>
             <td><%= patient.room_number || "Not assigned" %></td>
+
             <td class="table-actions">
               <a href="/patients/<%= patient.id %>" class="small-btn">View</a>
-              <a href="/patients/<%= patient.id %>/edit" class="small-btn">Edit</a>
 
-              <form action="/patients/<%= patient.id %>/delete" method="POST" onsubmit="return confirm('Delete this patient?');">
-                <button type="submit" class="small-btn danger">Delete</button>
-              </form>
+              <% if (currentUser && (currentUser.role === "admin" || currentUser.role === "doctor")) { %>
+                <a href="/patients/<%= patient.id %>/edit" class="small-btn">Edit</a>
+              <% } %>
+
+              <% if (currentUser && currentUser.role === "admin") { %>
+                <form action="/patients/<%= patient.id %>/delete" method="POST" onsubmit="return confirm('Delete this patient?');">
+                  <button type="submit" class="small-btn danger">Delete</button>
+                </form>
+              <% } %>
             </td>
           </tr>
         <% }) %>

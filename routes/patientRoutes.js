@@ -1,6 +1,6 @@
 const express = require("express");
 const pool = require("../config/db");
-const { requireAuth } = require("../middleware/authMiddleware");
+const { requireAuth, requireAdmin, requireRole } = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
@@ -28,7 +28,7 @@ router.get("/", requireAuth, async (req, res) => {
   }
 });
 
-router.get("/add", requireAuth, async (req, res) => {
+router.get("/add", requireRole("admin", "nurse"), async (req, res) => {
   try {
     const [rooms] = await pool.query(
       "SELECT * FROM hrm_rooms WHERE status = 'Available' ORDER BY room_number ASC"
@@ -48,7 +48,7 @@ router.get("/add", requireAuth, async (req, res) => {
   }
 });
 
-router.post("/add", requireAuth, async (req, res) => {
+router.post("/add", requireRole("admin", "nurse"), async (req, res) => {
   try {
     const {
       first_name,
@@ -133,7 +133,7 @@ router.get("/:id", requireAuth, async (req, res) => {
   }
 });
 
-router.get("/:id/edit", requireAuth, async (req, res) => {
+router.get("/:id/edit", requireRole("admin", "doctor"), async (req, res) => {
   try {
     const [patients] = await pool.query(
       "SELECT * FROM hrm_patients WHERE id = ?",
@@ -168,7 +168,7 @@ router.get("/:id/edit", requireAuth, async (req, res) => {
   }
 });
 
-router.post("/:id/edit", requireAuth, async (req, res) => {
+router.post("/:id/edit", requireRole("admin", "doctor"), async (req, res) => {
   try {
     const [oldPatients] = await pool.query(
       "SELECT room_id FROM hrm_patients WHERE id = ?",
@@ -243,7 +243,7 @@ router.post("/:id/edit", requireAuth, async (req, res) => {
   }
 });
 
-router.post("/:id/delete", requireAuth, async (req, res) => {
+router.post("/:id/delete", requireAdmin, async (req, res) => {
   try {
     const [patients] = await pool.query(
       "SELECT room_id FROM hrm_patients WHERE id = ?",
