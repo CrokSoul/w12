@@ -60,12 +60,26 @@ jobs:
             docker build -t "$IMAGE_NAME" .
 
             # Run new container
-            docker run -d \
+                        docker run -d \
               --name "$CONTAINER_NAME" \
               --restart unless-stopped \
               -p 3045:3045 \
+              -e PORT=3045 \
+              -e NODE_ENV=production \
+              -e SESSION_SECRET="${{ secrets.SESSION_SECRET }}" \
+              -e DB_HOST="${{ secrets.DB_HOST }}" \
+              -e DB_USER="${{ secrets.DB_USER }}" \
+              -e DB_PASSWORD="${{ secrets.DB_PASSWORD }}" \
+              -e DB_NAME="${{ secrets.DB_NAME }}" \
+              -e DB_PORT="${{ secrets.DB_PORT }}" \
               "$IMAGE_NAME"
+<<<<<<< HEAD
               
+=======
+
+            sleep 5
+
+>>>>>>> f27438e (Add environment variables to Docker deployment)
             echo "Docker containers:"
             docker ps -a
 
